@@ -1,0 +1,36 @@
+---
+export const prerender = true;
+
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+  const stories = await getCollection("stories");
+  return stories.map((story) => ({
+    params: { lang: story.data.lang, id: story.data.story_slug },
+    props: { story },
+  }));
+}
+
+const { story } = Astro.props;
+const { lang, id } = Astro.params;
+const { Content } = await render(story);
+---
+
+<BaseLayout title={story.data.title} lang={lang} currentPath={`stories/${id}/`}>
+  <article>
+    <header>
+      <p class="date-range">{story.data.date_range}</p>
+      <p class="meta">
+        {story.data.record_count} records
+      </p>
+    </header>
+    <Content />
+  </article>
+</BaseLayout>
+
+<style>
+  .date-range { color: #a09880; font-size: 0.9rem; margin-bottom: 0.25rem; }
+  .meta { color: #a09880; font-size: 0.85rem; margin-bottom: 2rem; }
+  article { line-height: 1.8; }
+</style>

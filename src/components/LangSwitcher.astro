@@ -1,0 +1,49 @@
+---
+interface Props {
+  currentLang: string;
+  currentPath?: string;
+}
+
+const { currentLang, currentPath = "" } = Astro.props;
+
+const languages = [
+  { code: "en", label: "EN" },
+  { code: "ru", label: "RU" },
+  { code: "pt", label: "PT" },
+];
+---
+
+<nav class="lang-switcher">
+  {languages.map((lang) => (
+    <a
+      href={`/${lang.code}/${currentPath}`}
+      class:list={["lang-link", { active: lang.code === currentLang }]}
+    >
+      {lang.label}
+    </a>
+  ))}
+</nav>
+
+<style>
+  .lang-switcher {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .lang-link {
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #a09880;
+    text-decoration: none;
+  }
+  .lang-link:hover {
+    background: #1a1812;
+    color: #f0ece4;
+    text-decoration: none;
+  }
+  .lang-link.active {
+    background: linear-gradient(135deg, #f5c542, #e8752a);
+    color: #0a0a0a;
+  }
+</style>

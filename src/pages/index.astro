@@ -1,0 +1,30 @@
+---
+export const prerender = true;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bree's Blog</title>
+  </head>
+  <body>
+    <script is:inline>
+      (function() {
+        var langs = navigator.languages || [navigator.language || 'en'];
+        var target = '/en/';
+        for (var i = 0; i < langs.length; i++) {
+          var code = langs[i].toLowerCase();
+          if (code.startsWith('ru')) { target = '/ru/'; break; }
+          if (code.startsWith('pt')) { target = '/pt/'; break; }
+        }
+        window.location.replace(target);
+      })();
+    </script>
+    <noscript>
+      <meta http-equiv="refresh" content="0;url=/en/" />
+    </noscript>
+    <p style="text-align:center;margin-top:2rem;color:#888;">Redirecting...</p>
+  </body>
+</html>
