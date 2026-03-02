@@ -6,4 +6,3 @@ dist/
 __pycache__/
 src/content/days/
 src/content/media-manifest.json
-public/illustrations/
