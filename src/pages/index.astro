@@ -1,5 +1,8 @@
 ---
 export const prerender = true;
+import { langCodes, defaultLang } from "../config/languages";
+import { site } from "../config/site";
+const supported = langCodes.filter((c) => c !== defaultLang);
 ---
 
 <!doctype html>
@@ -7,23 +10,28 @@ export const prerender = true;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bree's Blog</title>
+    <title>{site.title}</title>
   </head>
   <body>
-    <script is:inline>
+    <script is:inline define:vars={{ supported, defaultLang }}>
       (function() {
         var langs = navigator.languages || [navigator.language || 'en'];
-        var target = '/en/';
+        var target = '/' + defaultLang + '/';
         for (var i = 0; i < langs.length; i++) {
           var code = langs[i].toLowerCase();
-          if (code.startsWith('ru')) { target = '/ru/'; break; }
-          if (code.startsWith('pt')) { target = '/pt/'; break; }
+          for (var j = 0; j < supported.length; j++) {
+            if (code.startsWith(supported[j])) {
+              target = '/' + supported[j] + '/';
+              i = langs.length;
+              break;
+            }
+          }
         }
         window.location.replace(target);
       })();
     </script>
     <noscript>
-      <meta http-equiv="refresh" content="0;url=/en/" />
+      <meta http-equiv="refresh" content={`0;url=/${defaultLang}/`} />
     </noscript>
     <p style="text-align:center;margin-top:2rem;color:#888;">Redirecting...</p>
   </body>

@@ -1,22 +1,19 @@
 ---
+import { languages } from "../config/languages";
+import { localePath } from "../utils/routing";
+
 interface Props {
   currentLang: string;
   currentPath?: string;
 }
 
 const { currentLang, currentPath = "" } = Astro.props;
-
-const languages = [
-  { code: "en", label: "EN" },
-  { code: "ru", label: "RU" },
-  { code: "pt", label: "PT" },
-];
 ---
 
 <nav class="lang-switcher">
   {languages.map((lang) => (
     <a
-      href={`/${lang.code}/${currentPath}`}
+      href={localePath(lang.code, currentPath)}
       class:list={["lang-link", { active: lang.code === currentLang }]}
     >
       {lang.label}
@@ -27,23 +24,24 @@ const languages = [
 <style>
   .lang-switcher {
     display: flex;
-    gap: 0.5rem;
+    gap: var(--space-sm);
   }
   .lang-link {
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
-    font-size: 0.8rem;
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
     font-weight: 600;
-    color: #a09880;
+    color: var(--color-text-muted);
     text-decoration: none;
+    transition: background 0.15s, color 0.15s;
   }
   .lang-link:hover {
-    background: #1a1812;
-    color: #f0ece4;
+    background: var(--color-surface);
+    color: var(--color-text);
     text-decoration: none;
   }
   .lang-link.active {
-    background: linear-gradient(135deg, #f5c542, #e8752a);
-    color: #0a0a0a;
+    background: var(--gradient-accent);
+    color: var(--color-bg);
   }
 </style>

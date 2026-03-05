@@ -1,0 +1,55 @@
+---
+import { storyPath } from "../utils/routing";
+
+interface Props {
+  lang: string;
+  slug: string;
+  title: string;
+  dateRange: string;
+  recordCount: number;
+}
+
+const { lang, slug, title, dateRange, recordCount } = Astro.props;
+---
+
+<a href={storyPath(lang, slug)} class="story-card">
+  <h2 class="story-title">{title}</h2>
+  <div class="story-meta">
+    <span class="story-date">{dateRange}</span>
+    <span class="story-records">{recordCount} records</span>
+  </div>
+</a>
+
+<style>
+  .story-card {
+    display: block;
+    padding: 1.25rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    transition: border-color 0.15s, box-shadow 0.2s, transform 0.15s;
+  }
+
+  .story-card:hover {
+    border-color: var(--color-primary);
+    box-shadow: 0 4px 20px rgba(245, 197, 66, 0.1);
+    text-decoration: none;
+    transform: translateY(-1px);
+  }
+
+  .story-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: 0.4rem;
+    line-height: 1.3;
+  }
+
+  .story-meta {
+    display: flex;
+    gap: var(--space-md);
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+</style>

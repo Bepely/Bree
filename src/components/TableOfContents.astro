@@ -1,0 +1,77 @@
+---
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  headings: Heading[];
+}
+
+const { headings } = Astro.props;
+const filtered = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
+---
+
+{filtered.length > 0 && (
+  <nav class="toc">
+    <p class="toc-title">Contents</p>
+    <ul class="toc-list">
+      {filtered.map((h) => (
+        <li class={h.depth === 3 ? "toc-item toc-sub" : "toc-item"}>
+          <a href={`#${h.slug}`}>{h.text}</a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+)}
+
+<style>
+  .toc {
+    margin-bottom: var(--space-xl);
+    padding: var(--space-md) 1.25rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+  }
+
+  .toc-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: var(--space-sm);
+  }
+
+  .toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .toc-item {
+    margin: var(--space-xs) 0;
+  }
+
+  .toc-item a {
+    color: var(--color-text);
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .toc-item a:hover {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .toc-sub {
+    padding-left: var(--space-md);
+  }
+
+  .toc-sub a {
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+  }
+</style>

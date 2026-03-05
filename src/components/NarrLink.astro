@@ -1,0 +1,18 @@
+---
+import { site } from "../config/site";
+
+interface Props {
+  class?: string;
+}
+
+const className = Astro.props.class;
+const narrUrl = site.narr.url;
+---
+
+{narrUrl ? (
+  <a href={narrUrl} target="_blank" rel="noopener noreferrer" class:list={["narr-link", className]}>
+    <span class="narr-gradient">Narr</span>
+  </a>
+) : (
+  <span class:list={["narr-gradient", className]}>Narr</span>
+)}

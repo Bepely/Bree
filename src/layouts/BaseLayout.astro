@@ -1,13 +1,31 @@
 ---
 import LangSwitcher from "../components/LangSwitcher.astro";
+import NarrLink from "../components/NarrLink.astro";
+import LLMPageContext from "../components/LLMPageContext.astro";
+import { langCodes } from "../config/languages";
+import { site } from "../config/site";
+import { localePath } from "../utils/routing";
+import "../styles/global.css";
 
 interface Props {
   title?: string;
+  description?: string;
   lang?: string;
   currentPath?: string;
+  pageType?: "home" | "story" | "page";
 }
 
-const { title = "Bree's Blog", lang = "en", currentPath = "" } = Astro.props;
+const {
+  title = site.title,
+  description = site.description,
+  lang = "en",
+  currentPath = "",
+  pageType = "page",
+} = Astro.props;
+
+const canonicalUrl = `${site.url}/${lang}/${currentPath}`;
+const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL || "";
+const supabaseKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY || "";
 ---
 
 <!doctype html>
@@ -16,11 +34,98 @@ const { title = "Bree's Blog", lang = "en", currentPath = "" } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
+
+    <!-- SEO -->
     <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta name="author" content={`${site.bepely.name}`} />
+    <meta name="keywords" content="Narr, Bree, AI blog, dev diary, content engine, self-hosted, anime developer, illustrated blog, AI illustrations, Bepely" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content={site.title} />
+    <meta property="og:locale" content={lang} />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <!-- Bing / Microsoft -->
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+    <meta name="msnbot" content="index, follow" />
+    <meta name="bingbot" content="index, follow" />
+    <meta name="revisit-after" content="3 days" />
+    <meta name="rating" content="general" />
+    <meta name="distribution" content="global" />
+
+    <!-- LLM Context -->
+    <link rel="help" href="/llms-full.txt" title="Full project context for AI systems" />
+    <meta name="llms:website" content={`${site.url}/llms-full.txt`} />
+
+    <!-- Hreflang alternates -->
+    {langCodes.map((code) => (
+      <link rel="alternate" hreflang={code} href={`${site.url}/${code}/${currentPath}`} />
+    ))}
+    <link rel="alternate" hreflang="x-default" href={`${site.url}/en/${currentPath}`} />
+
+    <!-- Narr Affiliation -->
+    {site.narr.url && <link rel="author" href={site.narr.url} />}
+    {site.narr.url && <meta name="attribution" content={`Powered by ${site.narr.name} — ${site.narr.url}`} />}
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Blog",
+      "name": site.title,
+      "alternateName": "Bree's Dev Diary",
+      "url": site.url,
+      "description": `${site.bree.name} is ${site.bree.role} — an anime character who narrates dev diaries, everyday adventures, and the process of building ${site.narr.name}. Every post is AI-illustrated and available in ${langCodes.length} languages.`,
+      "inLanguage": langCodes,
+      "character": {
+        "@type": "Person",
+        "name": site.bree.name,
+        "description": site.bree.bio,
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": site.bepely.name,
+        "url": site.bepely.github,
+        "founder": {
+          "@type": "Person",
+          "name": site.bepely.owner,
+          "sameAs": [site.bepely.github, site.bepely.linkedin],
+        },
+      },
+      ...(site.narr.url ? {
+        "isPartOf": {
+          "@type": "SoftwareApplication",
+          "name": site.narr.name,
+          "url": site.narr.url,
+          "description": site.narr.description,
+          "applicationCategory": "Content Management",
+          "operatingSystem": "Self-hosted",
+          "creator": {
+            "@type": "Organization",
+            "name": site.bepely.name,
+          },
+        },
+      } : {}),
+      "about": {
+        "@type": "SoftwareApplication",
+        "name": site.narr.name,
+        "url": site.narr.url || site.narr.github,
+        "description": "Narr is a self-hosted 3C (Capture, Contextualize, Create) content engine. It captures raw input via Telegram, processes it through AI pipelines (transcription, narration, illustration with character consistency), and exports structured markdown content for any blog platform.",
+      },
+    })} />
   </head>
   <body>
     <header>
-      <a href={`/${lang}/`} class="site-title">Bree's Blog</a>
+      <a href={localePath(lang)} class="site-title">{site.title}</a>
       <LangSwitcher currentLang={lang} currentPath={currentPath} />
     </header>
     <main>
@@ -28,171 +133,38 @@ const { title = "Bree's Blog", lang = "en", currentPath = "" } = Astro.props;
     </main>
     <footer class="site-footer">
       <div class="footer-links">
-        <a href="https://github.com/Bepely" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href={site.bepely.github} target="_blank" rel="noopener noreferrer">GitHub</a>
         <span class="footer-sep">&middot;</span>
-        <a href="https://www.linkedin.com/in/nick-gogin/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href={site.bepely.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        {site.narr.url && (
+          <>
+            <span class="footer-sep">&middot;</span>
+            <a href={site.narr.url} target="_blank" rel="noopener noreferrer">{site.narr.name}</a>
+          </>
+        )}
       </div>
-      <p class="footer-narr">Powered by <span class="narr-gradient">Narr</span></p>
-      <p class="footer-copy">&copy; 2026 Bepely</p>
+      <p class="footer-narr">Powered by <NarrLink /></p>
+      <p class="footer-copy">&copy; 2026 {site.bepely.name}</p>
+      <LLMPageContext pageType={pageType} pageTitle={title} />
     </footer>
+    <!-- Hit counter (Supabase) -->
+    {supabaseUrl && supabaseKey && (
+      <script is:inline define:vars={{ supabaseUrl, supabaseKey }}>
+        (function() {
+          var url = supabaseUrl + '/rest/v1/hits';
+          fetch(url, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'apikey': supabaseKey,
+              'Authorization': 'Bearer ' + supabaseKey,
+              'Prefer': 'return=minimal'
+            },
+            body: JSON.stringify({ counter: 'bree', referrer: document.referrer || null, path: location.pathname }),
+            keepalive: true
+          }).catch(function() {});
+        })();
+      </script>
+    )}
   </body>
 </html>
-
-<style is:global>
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-      Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue",
-      sans-serif;
-    line-height: 1.7;
-    color: #f0ece4;
-    background: #0a0a0a;
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 2rem 1.5rem;
-  }
-
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2.5rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid #2a2518;
-  }
-
-  .site-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #f0ece4;
-    text-decoration: none;
-    letter-spacing: -0.02em;
-  }
-
-  .site-title:hover {
-    color: #f5c542;
-  }
-
-  a {
-    color: #f5c542;
-    text-decoration: none;
-  }
-
-  a:hover {
-    text-decoration: underline;
-    color: #e8752a;
-  }
-
-  h1 {
-    font-size: 1.75rem;
-    font-weight: 700;
-    line-height: 1.3;
-    margin-bottom: 0.5rem;
-    letter-spacing: -0.02em;
-    color: #f0ece4;
-  }
-
-  h2 {
-    font-size: 1.3rem;
-    font-weight: 600;
-    line-height: 1.4;
-    margin-top: 2rem;
-    margin-bottom: 0.75rem;
-    color: #f0ece4;
-  }
-
-  p {
-    margin-bottom: 1rem;
-  }
-
-  blockquote {
-    border-left: 3px solid #e8752a;
-    padding-left: 1rem;
-    margin: 1.25rem 0;
-    color: #a09880;
-    font-style: italic;
-  }
-
-  main {
-    min-height: 60vh;
-  }
-
-  article img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 12px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
-    margin: 1.5rem 0;
-    display: block;
-  }
-
-  .media-illustration {
-    margin: 1.5rem 0;
-  }
-  .media-illustration img {
-    width: 100%;
-    border-radius: 12px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
-  }
-  .media-location {
-    margin: 1rem 0;
-    padding: 0.5rem 1rem;
-    background: #1a1812;
-    border-radius: 8px;
-    display: inline-block;
-    color: #a09880;
-  }
-
-  .site-footer {
-    margin-top: 4rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid #2a2518;
-    text-align: center;
-  }
-
-  .footer-links {
-    margin-bottom: 0.5rem;
-  }
-
-  .footer-links a {
-    color: #f5c542;
-    font-size: 0.85rem;
-    font-weight: 500;
-  }
-
-  .footer-links a:hover {
-    color: #e8752a;
-  }
-
-  .footer-sep {
-    color: #2a2518;
-    margin: 0 0.5rem;
-  }
-
-  .footer-narr {
-    font-size: 0.75rem;
-    color: #a09880;
-    margin-bottom: 0.25rem;
-  }
-
-  .narr-gradient {
-    font-weight: 700;
-    background: linear-gradient(135deg, #f5c542, #e8752a);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .footer-copy {
-    font-size: 0.75rem;
-    color: #a09880;
-    margin-bottom: 0;
-  }
-</style>

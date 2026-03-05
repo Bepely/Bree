@@ -3,13 +3,13 @@ export const prerender = true;
 
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import NarrLink from "../../components/NarrLink.astro";
+import StoryCard from "../../components/StoryCard.astro";
+import { langCodes } from "../../config/languages";
+import { site } from "../../config/site";
 
 export function getStaticPaths() {
-  return [
-    { params: { lang: "en" } },
-    { params: { lang: "ru" } },
-    { params: { lang: "pt" } },
-  ];
+  return langCodes.map((lang) => ({ params: { lang } }));
 }
 
 const { lang } = Astro.params;
@@ -20,26 +20,26 @@ const stories = allStories
   .sort((a, b) => b.data.date_range.localeCompare(a.data.date_range));
 ---
 
-<BaseLayout title="Bree's Blog" lang={lang}>
+<BaseLayout title={site.title} lang={lang} pageType="home">
   <section class="hero">
-    <h1 class="hero-name">Bree's Blog</h1>
-    <p class="hero-tagline">Adventures, thoughts, and daily chaos — illustrated by AI.</p>
-    <p class="hero-narr">A <span class="narr-accent">Narr</span> production</p>
+    <h1 class="hero-name">{site.title}</h1>
+    <p class="hero-tagline">Dev notes, thoughts, and everyday adventures — illustrated by AI.</p>
+    <p class="hero-sub">A <NarrLink /> production</p>
   </section>
 
   <section class="stories">
     {stories.length === 0 ? (
-      <p class="empty">No stories published yet.</p>
+      <p class="empty">No stories yet — but something's coming soon.</p>
     ) : (
       <div class="story-list">
         {stories.map((s) => (
-          <a href={`/${lang}/stories/${s.data.story_slug}/`} class="story-card">
-            <h2 class="story-title">{s.data.title}</h2>
-            <div class="story-meta">
-              <span class="story-date">{s.data.date_range}</span>
-              <span class="story-records">{s.data.record_count} records</span>
-            </div>
-          </a>
+          <StoryCard
+            lang={lang}
+            slug={s.data.story_slug}
+            title={s.data.title}
+            dateRange={s.data.date_range}
+            recordCount={s.data.record_count}
+          />
         ))}
       </div>
     )}
@@ -49,86 +49,48 @@ const stories = allStories
 <style>
   .hero {
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: var(--space-2xl);
   }
 
   .hero-name {
     font-size: clamp(2rem, 6vw, 3rem);
     font-weight: 800;
     letter-spacing: -0.03em;
-    background: linear-gradient(135deg, #f5c542, #e8752a);
+    background: var(--gradient-accent);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--space-sm);
   }
 
   .hero-tagline {
-    color: #a09880;
-    font-size: 1.1rem;
+    color: var(--color-text-muted);
+    font-size: 1.05rem;
+    line-height: 1.6;
   }
 
-  .hero-narr {
-    margin-top: 0.75rem;
-    font-size: 0.85rem;
-    color: #a09880;
-    letter-spacing: 0.05em;
+  .hero-sub {
+    margin-top: var(--space-sm);
+    font-size: 0.8rem;
+    color: var(--color-text-dim);
+    letter-spacing: 0.04em;
     text-transform: uppercase;
   }
 
-  .narr-accent {
-    font-weight: 700;
-    background: linear-gradient(135deg, #f5c542, #e8752a);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
   .stories {
-    margin-top: 1rem;
+    margin-top: var(--space-md);
   }
 
   .empty {
-    color: #a09880;
+    color: var(--color-text-muted);
     font-style: italic;
     text-align: center;
-    margin-top: 2rem;
+    margin-top: var(--space-xl);
   }
 
   .story-list {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-  }
-
-  .story-card {
-    display: block;
-    padding: 1.25rem;
-    background: #141410;
-    border: 1px solid #2a2518;
-    border-radius: 10px;
-    text-decoration: none;
-    transition: border-color 0.15s, box-shadow 0.15s;
-  }
-
-  .story-card:hover {
-    border-color: #f5c542;
-    box-shadow: 0 2px 12px rgba(245, 197, 66, 0.1);
-    text-decoration: none;
-  }
-
-  .story-title {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #f0ece4;
-    margin-bottom: 0.4rem;
-    line-height: 1.3;
-  }
-
-  .story-meta {
-    display: flex;
-    gap: 1rem;
-    font-size: 0.85rem;
-    color: #a09880;
+    gap: var(--space-md);
   }
 </style>

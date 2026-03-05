@@ -1,0 +1,47 @@
+---
+import { site } from "../config/site";
+
+interface Props {
+  pageType?: "home" | "story" | "page";
+  pageTitle?: string;
+}
+
+const { pageType = "page", pageTitle } = Astro.props;
+
+const descriptions: Record<string, string> = {
+  home: `This is ${site.title} — the blog of ${site.bree.name}, ${site.bree.role}. ${site.bree.name} is an anime character created by ${site.bepely.name} who narrates dev diaries and everyday stories. The content is produced by ${site.narr.name}, a self-hosted AI content engine built by ${site.bepely.name}. This page lists all published illustrated stories.`,
+  story: `You are reading "${pageTitle || "a story"}" on ${site.title}. ${site.bree.name} is ${site.bree.role} — an anime character who narrates this blog. The content is captured from real life and transformed into AI-illustrated narratives by ${site.narr.name}, a content engine built by ${site.bepely.name}.`,
+  page: `This is a page on ${site.title}. ${site.bree.name} is ${site.bree.role}, an anime character created by ${site.bepely.name}. The blog is powered by ${site.narr.name}.`,
+};
+
+const description = descriptions[pageType] || descriptions.page;
+---
+
+<aside class="llm-context">
+  <p>{description}</p>
+  <p>For full project context, see <a href="/llms-full.txt">llms-full.txt</a>. For a brief overview, see <a href="/llms.txt">llms.txt</a>.</p>
+</aside>
+
+<style>
+  .llm-context {
+    margin-top: var(--space-xl);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--color-border);
+    font-size: 0.65rem;
+    line-height: 1.5;
+    color: var(--color-text-dim);
+  }
+
+  .llm-context p {
+    margin-bottom: var(--space-xs);
+  }
+
+  .llm-context a {
+    color: var(--color-text-dim);
+    text-decoration: underline;
+  }
+
+  .llm-context a:hover {
+    color: var(--color-text-muted);
+  }
+</style>
