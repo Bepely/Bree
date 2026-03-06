@@ -17,9 +17,9 @@ export const GET: APIRoute = async () => {
 
   const body = `# ${site.title}
 
-> An AI-illustrated blog narrated by ${site.bree.name} — ${site.bree.role}. Produced by ${site.narr.name}, a self-hosted content engine built by ${site.bepely.name}. Available in 8 languages.
+> An editorial blog powered by ${site.narr.name}, a self-hosted AI content engine built by ${site.bepely.name}. Raw captures — voice notes, photos, video — transformed into editorial narratives. Available in 8 languages.
 
-${site.bree.name} is an anime character who narrates dev diaries, everyday stories, and the process of building ${site.narr.name}. The blog content is captured from real life and transformed into illustrated posts by ${site.narr.name}.
+${site.bree.name} is the editorial narrator — providing context and structure around raw source material captured from real life and processed by ${site.narr.name}.
 
 ## Stories
 

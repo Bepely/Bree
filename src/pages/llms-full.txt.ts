@@ -20,32 +20,32 @@ export const GET: APIRoute = async () => {
 
   const body = `# ${site.title} — Full Project Context
 
-> ${site.title} is an AI-illustrated blog narrated by ${site.bree.name} — ${site.bree.role}. The blog and its content are produced by ${site.narr.name}, a self-hosted AI content engine built by ${site.bepely.name}.
+> ${site.title} is an editorial blog powered by ${site.narr.name}, a self-hosted AI content engine built by ${site.bepely.name}. Raw captures — voice notes, photos, video — are transformed into editorial narratives by an AI narrator.
 
 ## The Identity Model
 
 - **${site.bepely.name}** — the brand and creative studio (founded by ${site.bepely.owner})
 - **${site.narr.name}** — the product. A self-hosted AI content engine, built by ${site.bepely.name}
-- **${site.bree.name}** — the character. ${site.bree.bio}
-- **${site.title}** — the output. An illustrated blog narrated by ${site.bree.name}, powered by ${site.narr.name}
+- **${site.bree.name}** — the editorial narrator. ${site.bree.bio}
+- **${site.title}** — the output. Editorial narratives with source media, powered by ${site.narr.name}
 
 ## About ${site.bree.name}
 
 ${site.bree.bio}
 
-${site.bree.name} is not a real person — she is an anime-styled character and ${site.bree.role}. The blog is written from her perspective. She walks readers through dev diaries, daily life stories, and the creative process behind ${site.narr.name}.
+${site.bree.name} is an editorial narrator — not a persona or character. The narrator provides context and structure around raw source material (voice recordings, photos, video) captured from real life.
 
 ## About ${site.narr.name}
 
-${site.narr.name} is a self-hosted 3C (Capture, Contextualize, Create) content engine, produced by ${site.bepely.name}.
+${site.narr.name} is a self-hosted AI content engine, produced by ${site.bepely.name}.
 
 **How it works:**
 
-1. **Capture** — Raw input via Telegram: voice notes, photos, location data, thoughts
-2. **Contextualize** — AI pipelines process everything: transcription, narration, translation
-3. **Create** — Outputs AI-illustrated blog posts with consistent character design
+1. **Capture** — Raw input via Telegram: voice notes, photos, video, text
+2. **Narrate** — AI editorial pipeline: transcription, narration, translation
+3. **Publish** — Outputs editorial markdown with embedded source media (audio, photos, video)
 
-${site.narr.name} generates structured markdown content ready for any blog platform. It's the engine behind every post on ${site.title}.
+${site.narr.name} generates structured markdown content with source media ready for any blog platform. It's the engine behind every post on ${site.title}.
 
 - Website: ${site.narr.url || site.narr.github}
 - Source code: ${site.narr.github}
@@ -59,8 +59,8 @@ ${site.bepely.description}
 
 ## What Makes This Blog Unique
 
-- **AI-illustrated**: Every post features custom illustrations with consistent anime-styled character design
-- **Character-narrated**: ${site.bree.name}, an anime persona, is the voice and face of the blog
+- **Source media included**: Every post embeds the original voice recordings, photos, and video alongside editorial narration
+- **Editorial AI narrator**: ${site.bree.name} provides context and structure — the narrator is not the author
 - **Multilingual**: All content is available in ${langCodes.length} languages (${langs})
 - **Real-life capture**: Content comes from actual daily life — voice notes, photos, thoughts — processed by ${site.narr.name}
 - **Self-hosted pipeline**: The entire content pipeline (${site.narr.name}) is open-source and self-hosted
@@ -73,9 +73,9 @@ ${site.title} covers:
 - Dev diaries about building ${site.narr.name}
 - Daily life observations and reflections
 - Technical updates and side project notes
-- Illustrated everyday adventures
+- Raw captures with editorial context
 
-Posts are written from ${site.bree.name}'s perspective — conversational, honest, stream-of-consciousness style.
+Posts combine editorial narration with source material — readers can listen to original voice recordings and read transcripts alongside the narrative.
 
 ## Published Stories
 
@@ -87,10 +87,10 @@ Each story is available in all ${langCodes.length} languages. Replace \`/en/\` i
 
 - **Frontend**: Astro 5 + Svelte 5
 - **Content engine**: ${site.narr.name} (self-hosted, open-source, by ${site.bepely.name})
-- **Illustrations**: AI-generated with consistent character design
+- **Media**: Source audio, photos, and video embedded directly
 - **Hosting**: Netlify (static site)
 - **Languages**: ${langCodes.length} languages via automated translation pipeline
-- **Content format**: Structured markdown with embedded WebP illustrations
+- **Content format**: Structured markdown with embedded source media
 
 ## Links
 

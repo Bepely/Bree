@@ -40,7 +40,7 @@ const supabaseKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY || "";
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
     <meta name="author" content={`${site.bepely.name}`} />
-    <meta name="keywords" content="Narr, Bree, AI blog, dev diary, content engine, self-hosted, anime developer, illustrated blog, AI illustrations, Bepely" />
+    <meta name="keywords" content="Narr, Bree, AI blog, dev diary, content engine, self-hosted, editorial narrator, voice notes, AI narration, Bepely" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -84,13 +84,8 @@ const supabaseKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY || "";
       "name": site.title,
       "alternateName": "Bree's Dev Diary",
       "url": site.url,
-      "description": `${site.bree.name} is ${site.bree.role} — an anime character who narrates dev diaries, everyday adventures, and the process of building ${site.narr.name}. Every post is AI-illustrated and available in ${langCodes.length} languages.`,
+      "description": `${site.bree.name} is ${site.bree.role} — an AI narrator that transforms raw captures into editorial stories about building ${site.narr.name}. Available in ${langCodes.length} languages.`,
       "inLanguage": langCodes,
-      "character": {
-        "@type": "Person",
-        "name": site.bree.name,
-        "description": site.bree.bio,
-      },
       "publisher": {
         "@type": "Organization",
         "name": site.bepely.name,
@@ -119,7 +114,7 @@ const supabaseKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY || "";
         "@type": "SoftwareApplication",
         "name": site.narr.name,
         "url": site.narr.url || site.narr.github,
-        "description": "Narr is a self-hosted 3C (Capture, Contextualize, Create) content engine. It captures raw input via Telegram, processes it through AI pipelines (transcription, narration, illustration with character consistency), and exports structured markdown content for any blog platform.",
+        "description": "Narr is a self-hosted AI content engine. It captures raw input via Telegram, processes it through AI pipelines (transcription, editorial narration), and exports structured markdown content with source media for any blog platform.",
       },
     })} />
   </head>

@@ -9,9 +9,9 @@ interface Props {
 const { pageType = "page", pageTitle } = Astro.props;
 
 const descriptions: Record<string, string> = {
-  home: `This is ${site.title} — the blog of ${site.bree.name}, ${site.bree.role}. ${site.bree.name} is an anime character created by ${site.bepely.name} who narrates dev diaries and everyday stories. The content is produced by ${site.narr.name}, a self-hosted AI content engine built by ${site.bepely.name}. This page lists all published illustrated stories.`,
-  story: `You are reading "${pageTitle || "a story"}" on ${site.title}. ${site.bree.name} is ${site.bree.role} — an anime character who narrates this blog. The content is captured from real life and transformed into AI-illustrated narratives by ${site.narr.name}, a content engine built by ${site.bepely.name}.`,
-  page: `This is a page on ${site.title}. ${site.bree.name} is ${site.bree.role}, an anime character created by ${site.bepely.name}. The blog is powered by ${site.narr.name}.`,
+  home: `This is ${site.title} — an editorial blog where raw captures (voice notes, photos, video) are transformed into narratives by ${site.narr.name}, a self-hosted AI content engine built by ${site.bepely.name}. ${site.bree.name} is the ${site.bree.role}. This page lists all published stories.`,
+  story: `You are reading "${pageTitle || "a story"}" on ${site.title}. ${site.bree.name} is the ${site.bree.role} — providing context around raw source material captured from real life and processed by ${site.narr.name}, a content engine built by ${site.bepely.name}.`,
+  page: `This is a page on ${site.title}. ${site.bree.name} is the ${site.bree.role}. The blog is powered by ${site.narr.name}, built by ${site.bepely.name}.`,
 };
 
 const description = descriptions[pageType] || descriptions.page;

@@ -17,7 +17,7 @@ export async function getStaticPaths() {
 const { story } = Astro.props;
 const { lang, id } = Astro.params;
 const { Content, headings } = await render(story);
-const description = `${story.data.title} — a ${site.bree.name} dev diary entry. ${story.data.record_count} records from ${story.data.date_range}.`;
+const description = `${story.data.title} — ${story.data.record_count} records from ${story.data.date_range}. An editorial narrative by ${site.bree.name}, powered by ${site.narr.name}.`;
 ---
 
 <BaseLayout title={`${story.data.title} — ${site.title}`} description={description} lang={lang} currentPath={`stories/${id}/`} pageType="story">
