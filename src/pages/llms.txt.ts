@@ -19,15 +19,13 @@ export const GET: APIRoute = async () => {
 
 > An editorial blog powered by ${site.narr.name}, a self-hosted AI content engine built by ${site.bepely.name}. Raw captures — voice notes, photos, video — transformed into editorial narratives. Available in 8 languages.
 
-${site.bree.name} is the editorial narrator — providing context and structure around raw source material captured from real life and processed by ${site.narr.name}.
-
 ## Stories
 
 ${storyLinks || "- No stories published yet."}
 
 ## Project Context
 
-- [Full Project Context](/llms-full.txt): Comprehensive information about ${site.title}, ${site.bree.name}, ${site.narr.name}, and ${site.bepely.name}
+- [Full Project Context](/llms-full.txt): Comprehensive information about ${site.title}, ${site.narr.name}, and ${site.bepely.name}
 - [${site.narr.name} on GitHub](${site.narr.github}): Source code for the content engine
 - [${site.bepely.name} on GitHub](${site.bepely.github}): Organization profile
 

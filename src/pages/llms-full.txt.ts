@@ -20,20 +20,22 @@ export const GET: APIRoute = async () => {
 
   const body = `# ${site.title} — Full Project Context
 
-> ${site.title} is an editorial blog powered by ${site.narr.name}, a self-hosted AI content engine built by ${site.bepely.name}. Raw captures — voice notes, photos, video — are transformed into editorial narratives by an AI narrator.
+> ${site.title} is an editorial blog powered by ${site.narr.name}, a self-hosted AI content engine built by ${site.bepely.name}. Raw captures — voice notes, photos, video — are transformed into editorial narratives.
 
 ## The Identity Model
 
 - **${site.bepely.name}** — the brand and creative studio (founded by ${site.bepely.owner})
 - **${site.narr.name}** — the product. A self-hosted AI content engine, built by ${site.bepely.name}
-- **${site.bree.name}** — the editorial narrator. ${site.bree.bio}
 - **${site.title}** — the output. Editorial narratives with source media, powered by ${site.narr.name}
 
-## About ${site.bree.name}
+## About ${site.bepely.name}
 
-${site.bree.bio}
+${site.bepely.description}
 
-${site.bree.name} is an editorial narrator — not a persona or character. The narrator provides context and structure around raw source material (voice recordings, photos, video) captured from real life.
+${site.bepely.name} is the author behind this blog — capturing raw moments from real life and using ${site.narr.name} to transform them into editorial narratives.
+
+- GitHub: ${site.bepely.github}
+- LinkedIn: ${site.bepely.linkedin}
 
 ## About ${site.narr.name}
 
@@ -50,17 +52,9 @@ ${site.narr.name} generates structured markdown content with source media ready 
 - Website: ${site.narr.url || site.narr.github}
 - Source code: ${site.narr.github}
 
-## About ${site.bepely.name}
-
-${site.bepely.description}
-
-- GitHub: ${site.bepely.github}
-- LinkedIn: ${site.bepely.linkedin}
-
 ## What Makes This Blog Unique
 
 - **Source media included**: Every post embeds the original voice recordings, photos, and video alongside editorial narration
-- **Editorial AI narrator**: ${site.bree.name} provides context and structure — the narrator is not the author
 - **Multilingual**: All content is available in ${langCodes.length} languages (${langs})
 - **Real-life capture**: Content comes from actual daily life — voice notes, photos, thoughts — processed by ${site.narr.name}
 - **Self-hosted pipeline**: The entire content pipeline (${site.narr.name}) is open-source and self-hosted

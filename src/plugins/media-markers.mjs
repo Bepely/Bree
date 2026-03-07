@@ -25,7 +25,7 @@ function buildIllustrationHtml(value) {
   const escaped = escapeHtml(value.trim());
   return [
     '<div class="media-illustration">',
-    `  <img src="/illustrations/bree/${escaped}.webp" alt="" loading="lazy" />`,
+    `  <img src="/illustrations/bepely/${escaped}.webp" alt="" loading="lazy" />`,
     "</div>",
   ].join("\n");
 }

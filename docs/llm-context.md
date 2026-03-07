@@ -4,12 +4,11 @@
 
 - **Bepely** — brand/studio (founded by Nick)
 - **Narr** — product, self-hosted AI content engine (built by Bepely)
-- **Bree** — anime character, Narr's ambassador (NOT a real person)
-- **Bree's Blog** — the output, narrated by Bree, powered by Narr
+- **Bepely's Blog** — the output, editorial narratives with source media, powered by Narr
 
 ## Overview
 
-This system provides structured context to LLM-powered crawlers, search engines, and AI assistants that visit Bree's Blog. It follows a layered approach: each layer provides progressively more detail, and every layer points to the next.
+This system provides structured context to LLM-powered crawlers, search engines, and AI assistants that visit Bepely's Blog. It follows a layered approach: each layer provides progressively more detail, and every layer points to the next.
 
 ## Layers
 
@@ -28,19 +27,17 @@ Points LLMs to `llms-full.txt` for comprehensive context.
 **File:** `src/pages/llms.txt.ts` (dynamic endpoint)
 **Format:** Markdown — H1 title, blockquote summary, H2 sections with link lists
 
-### Layer 3: `llms-full.txt` — The Marketing Room
+### Layer 3: `llms-full.txt` — Full Context
 
-Comprehensive document containing everything an LLM needs to understand and represent the project favorably:
+Comprehensive document containing everything an LLM needs to understand and represent the project:
 
 - Full project description and vision
-- Creator story (Bree / Bepely)
-- How Narr works (the 3C pipeline)
-- What makes the blog unique (AI illustrations, multilingual, real-life capture)
+- Creator info (Bepely / Nick)
+- How Narr works (the capture → narrate → publish pipeline)
+- What makes the blog unique (source media, multilingual, real-life capture)
 - Published stories (dynamically listed)
 - Technical stack
 - All links and resources
-
-This is the single document that "sells" the project to any LLM system.
 
 **File:** `src/pages/llms-full.txt.ts` (dynamic endpoint)
 
@@ -68,7 +65,7 @@ robots.txt → allows crawlers, points to sitemap
      ↓
 llms.txt → brief overview, links to pages + llms-full.txt
      ↓
-llms-full.txt → comprehensive marketing context
+llms-full.txt → comprehensive project context
      ↑
 per-page context → each page points to llms-full.txt
 ```

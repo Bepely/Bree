@@ -40,7 +40,7 @@ const supabaseKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY || "";
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
     <meta name="author" content={`${site.bepely.name}`} />
-    <meta name="keywords" content="Narr, Bree, AI blog, dev diary, content engine, self-hosted, editorial narrator, voice notes, AI narration, Bepely" />
+    <meta name="keywords" content="Narr, Bepely, AI blog, dev diary, content engine, self-hosted, voice notes, AI narration, editorial narratives" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -82,9 +82,9 @@ const supabaseKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY || "";
       "@context": "https://schema.org",
       "@type": "Blog",
       "name": site.title,
-      "alternateName": "Bree's Dev Diary",
+      "alternateName": "Bepely's Dev Diary",
       "url": site.url,
-      "description": `${site.bree.name} is ${site.bree.role} — an AI narrator that transforms raw captures into editorial stories about building ${site.narr.name}. Available in ${langCodes.length} languages.`,
+      "description": `${site.title} — raw captures transformed into editorial narratives by ${site.narr.name}, a self-hosted AI content engine. By ${site.bepely.name}. Available in ${langCodes.length} languages.`,
       "inLanguage": langCodes,
       "publisher": {
         "@type": "Organization",
@@ -155,7 +155,7 @@ const supabaseKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY || "";
               'Authorization': 'Bearer ' + supabaseKey,
               'Prefer': 'return=minimal'
             },
-            body: JSON.stringify({ counter: 'bree', referrer: document.referrer || null, path: location.pathname }),
+            body: JSON.stringify({ counter: 'bepely', referrer: document.referrer || null, path: location.pathname }),
             keepalive: true
           }).catch(function() {});
         })();
